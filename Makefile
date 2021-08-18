@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := romprod.rom
 
-PREFIX := $(if $(shell which mipsel-unknown-elf-as),./binutils/bin/,)
+PREFIX := $(if $(shell which mipsel-unknown-elf-as),,./binutils/bin/)
 
 lzss: lzss.c
 	cc $< -o $@
