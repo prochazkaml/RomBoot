@@ -1,77 +1,15 @@
 #original FASTBOOT.S - Decompiled from Caetla ROM
 #Modified by Sickle July 2013 for RomProd cartridge boots.
-                
-				
-fastBootBegin:
-                addiu   $sp, $sp, -0x4
-                sw      $ra, 0($sp)
-                nop
-
-                jal     initBIOS
-                nop
-
-                #jal     bootCD
-                #nop
-
-                lw      $ra, 0($sp)
-                nop
-                jr      $ra
-                addiu   $sp, $sp, 0x4
-
-
-#psxEXEText      db 'cdrom:PSX.EXE',$3B,'1',$0     # 1F003BAC
-#sysCNFText      db 'cdrom:SYSTEM.CNF'             # 1F003BBC
-#                db $3B,'1',$0,$0
-
-strcpy:         addiu   $t2,$0,0xA0
-                jr      $t2
-                addiu   $t1,$0,0x19
-
-memcpy:         addiu   $t2,$0,0xA0
-                jr      $t2
-                addiu   $t1,$0,0x2A
-
-Load:           addiu   $t2,$0,0xA0
-                jr      $t2
-                addiu   $t1,$0,0x42
 
 Exec:
                 addiu   $t2,$0,0xA0
                 jr      $t2
                 addiu   $t1,$0,0x43
 
-flushCache:
-                ori     $t2, $0, 0xA0
-                jr      $t2
-                ori     $t1, $0, 0x44
-
-StartPAD:
-                ori     $t2, $0, 0xB0
-                jr      $t2
-                ori     $t1, $0, 0x13             # StartPAD
-
-PAD_init:
-                ori     $t2, $0, 0xB0
-                jr      $t2
-                ori     $t1, $0, 0x15             # PAD_init
-
 ResetEntryInt:
                 addiu   $t2,$0,0xB0
                 jr      $t2                        # ResetEntryInt
                 addiu   $t1,$0,0x18
-
-open:           addiu   $t2,$0,0xB0
-                jr      $t2
-                addiu   $t1,$0,0x32
-
-
-read:           addiu   $t2,$0,0xB0
-                jr      $t2
-                addiu   $t1,$0,0x34
-
-close:          addiu   $t2,$0,0xB0
-                jr      $t2
-                addiu   $t1,$0,0x36
 
 InitRCnt:
                 addiu   $t2,$0,0xC0
@@ -82,12 +20,6 @@ InitException:
                 addiu   $t2,$0,0xC0
                 jr      $t2
                 addiu   $t1,$0,0x1                # InitException
-
-sysEnqIntrp:
-                addiu   $t2, $0, 0xC0             # Enques and IRQ.
-                jr      $t2
-                addiu   $t1, $0, 0x2
-
 
 InstallExceptionHandlers:
                 addiu   $t2,$0,0xC0
@@ -114,20 +46,6 @@ PatchA0Table:
                 addiu   $t2, $0, 0xC0
                 jr      $t2                        # PatchA0Table
                 addiu   $t1, $0, 0x1C
-
-enterCritical:
-                addiu   $a0, $0, 0x1
-                syscall 0x0
-                jr      $ra
-                nop
-
-exitCritical:
-                addiu   $a0, $0, 0x2
-                syscall 0x0
-                jr      $ra
-                nop
-
-
 
 initBIOS:
 
