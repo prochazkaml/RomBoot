@@ -4,8 +4,7 @@
 
 # unsigned long * lzDecompress(unsigned long * src, unsigned long * dest)
 asm_lzdecompress:
-  lw $t0,0($a0) # T0 = Data Length & Header Info
-  addiu $a0,4  # Add 4 To LZ Offset
+  lw $t0,-4($a0) # T0 = Data Length & Header Info
   srl $t0,8    # T0 = Data Length
   addu $t0,$a1  # T0 = Destination End Offset (RAM End Offset)
 

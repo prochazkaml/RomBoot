@@ -27,6 +27,14 @@
 __start:
 		.org	0x00000000		#header, points to EP2
 
+biosJumpTable:
+                .long 0xBFC00420                      # 1F003B7C
+                .long 0xBFC042D0                      # 1F003B80
+                .long 0xBFC042A0                      # 1F003B84
+                .long 0xBFC04610                      # 1F003B88
+                .long 0xBFC04678                      # 1F003B8C
+                .long 0xBFC0472C                      # 1F003B90
+
 # This area (post-boot) is not used by us, so put it to some good use:
 
 #===== Entry Point 1
@@ -34,14 +42,18 @@ __start:
 #returns control to bios if XPlorer switch is off.
 
 entryPoint1:
-	
+		# Prepare for initBIOS
+
+		mfc0    $v0, $12                   	# Fetch SR (requires 'status' - sickle)	
 
 		addiu   $sp, $sp, -0x4						#Hide the sausage
 		sw      $ra, 0($sp)
-		nop		
-	
+
+		andi    $v0, $v0,0xFBFE              		# Enable interrupts & use normal endianness?
+		mtc0    $v0, $12						#MOD
+
 		jal initBIOS						#Init bios properly.
-		nop
+		lui     $s0, 0x1F00		# biosJumpTable - it's in a fixed position (0x1F000000)
 
 #===== Copy exe from end of rom into main memory. Hooray.	
 #Rebuilt from RunRom decompilation. Pretty functional by the look of things.
@@ -56,10 +68,9 @@ copyExe:
 		la $t0,data
 		
 		lw $a1,0x0($t0)				#Where we'll write to
-		addiu $a0,$t0,0x10			#PSX EXE actual code offset (reading from)
-		
+
 		jal asm_lzdecompress
-		nop
+		addiu $a0,$t0,0x14			#PSX EXE actual code offset (reading from) - delay slot
 
 		la $t0,data
 
@@ -73,7 +84,7 @@ copyExe:
 		#li gp,$0000000
 						
 		jr $t1		#Jumpity jump jump
-		nop		
+		nop
 
 		.org	0x00000080		#0x80 points to EP1
 		.long	entryPoint1
