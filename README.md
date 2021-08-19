@@ -33,8 +33,8 @@ The Makefile will automatically detect where your binutils are.
 ## Usage
 
 ```
-./minify_exe <PATH_TO_EXE>  # Compresses your EXE and copies it to the repo's root
-make                        # Assembles everything
+./minify_exe.sh <PATH_TO_EXE>  # Compresses your EXE and copies it to the repo's root
+make                           # Assembles everything
 ```
 
 If everything goes well, the output will be in ```romprod.rom```. Make sure it's under 64 KiB, otherwise it will not work.
