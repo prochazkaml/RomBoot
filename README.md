@@ -1,4 +1,4 @@
-# RomProd
+# RomBoot
 Converts a PlayStation PS-EXE to a bootable ROM image, which can be burnt to an EEPROM connected to the PlayStation's parallel port (ie. on an Xplorer cheat cartridge, or soldered directly to the mainboard).
 The EXE will boot as soon as the console is powered up, skipping the PlayStation's intro sequence.
 
@@ -37,7 +37,7 @@ The Makefile will automatically detect where your binutils are.
 make                           # Assembles everything
 ```
 
-If everything goes well, the output will be in ```romprod.rom```. Make sure it's under 64 KiB, otherwise it will not work.
+If everything goes well, the output will be in ```boot.rom```. Make sure it's under 64 KiB, otherwise it will not work.
 
 ## Testing
 
