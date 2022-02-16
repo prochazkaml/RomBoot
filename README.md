@@ -2,7 +2,7 @@
 Converts a PlayStation PS-EXE to a bootable ROM image, which can be burnt to an EEPROM connected to the PlayStation's parallel port (ie. on an Xplorer cheat cartridge, or soldered directly to the mainboard).
 The EXE will boot as soon as the console is powered up, skipping the PlayStation's intro sequence.
 
-The PlayStation's parallel port has a hard limit of 64 KiB (unless you want to get messy), so the EXE is LZ77-compressed before it's included in the ROM.
+The PlayStation's parallel port has a hard limit of 512 KiB (unless you want to get messy), so the EXE is LZ77-compressed before it's included in the ROM.
 
 Useful for projects like [sioload](https://github.com/danhans42/sioload), which allows you to upload EXEs to the PlayStation via a serial cable, now without the need of burning the utility to the CD and wearing out the aging PlayStation's CD-ROM drive.
 
@@ -37,7 +37,7 @@ The Makefile will automatically detect where your binutils are.
 make                           # Assembles everything
 ```
 
-If everything goes well, the output will be in ```boot.rom```. Make sure it's under 64 KiB, otherwise it will not work.
+If everything goes well, the output will be in ```boot.rom```. Make sure it's under 512 KiB, otherwise it will not work.
 
 ## Testing
 
